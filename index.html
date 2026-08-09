@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portofolio - Abriel Ghasani</title>
+  <!-- Google Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #f59e0b; /* Warna kuning/gold sesuai helm & aksen portofolio */
+      --secondary: #1e3a8a; /* Warna biru navy sesuai tema engineering */
+      --bg-dark: #0a0f1d;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(245, 158, 11, 0.3);
+      --text: #f8fafc;
+      --text-muted: #cbd5e1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-dark);
+      color: var(--text);
+    }
+
+    /* Pattern Blueprint & Glow Background */
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: 
+        linear-gradient(to right, rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(10, 15, 29, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--primary);
+      letter-spacing: 2px;
+    }
+
+    .slide-indicator {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+
+    .dot.active {
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+      transform: scale(1.2);
+    }
+
+    /* Container Slide Horizontal */
+    .slider-wrapper {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slider-container {
+      display: flex;
+      width: 900vw; /* Total 9 Slide */
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+      will-change: transform;
+    }
+
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      perspective: 1000px;
+    }
+
+    /* Background Latar belakang Engineering */
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(10, 15, 29, 0.92), rgba(30, 58, 138, 0.85));
+      z-index: 1;
+    }
+
+    #slide1 { background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1920&q=80'); }
+    #slide2 { background-image: url('https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1920&q=80'); }
+    #slide3 { background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80'); }
+    #slide4 { background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80'); }
+    #slide5 { background-image: url('https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1920&q=80'); }
+    #slide6 { background-image: url('https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1920&q=80'); }
+    #slide7 { background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1920&q=80'); }
+    #slide8 { background-image: url('https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=1920&q=80'); }
+    #slide9 { background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1920&q=80'); }
+
+    /* Kartu 3D Glassmorphism */
+    .card-3d {
+      position: relative;
+      z-index: 2;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 3rem;
+      max-width: 850px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease-out;
+    }
+
+    .card-content {
+      transform: translateZ(30px);
+    }
+
+    .title-tag {
+      color: var(--primary);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    h1, h2 {
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 2rem; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; display: inline-block;}
+
+    p {
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Grid Layout Internal */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .box-info {
+      background: rgba(255, 255, 255, 0.04);
+      border-left: 3px solid var(--primary);
+      padding: 1.2rem;
+      border-radius: 8px;
+    }
+
+    .box-info h3, .box-info h4 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Tombol Navigasi Samping */
+    .nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s;
+    }
+
+    .nav-btn:hover {
+      background: var(--primary);
+      color: #000;
+      box-shadow: 0 0 15px var(--primary);
+    }
+
+    .prev-btn { left: 1.5rem; }
+    .next-btn { right: 1.5rem; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+      .card-3d { padding: 1.5rem; }
+      .nav-btn { width: 40px; height: 40px; }
+      .prev-btn { left: 0.5rem; }
+      .next-btn { right: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+
+  <!-- Header Navbar -->
+  <header>
+    <div class="logo">ABRIEL GHASANI</div>
+    <div class="slide-indicator" id="dotsContainer"></div>
+  </header>
+
+  <!-- Tombol Geser Samping -->
+  <button class="nav-btn prev-btn" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></button>
+  <button class="nav-btn next-btn" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></button>
+
+  <div class="slider-wrapper">
+    <div class="slider-container" id="sliderContainer">
+
+      <!-- Slide 1: Front Page -->
+      <div class="slide" id="slide1">
+        <div class="card-3d">
+          <div class="card-content">
+            <span class="title-tag">ENGINEERING STAFF</span>
+            <h1>Abriel Ghasani</h1>
+            <p>Portofolio Pengalaman Kerja & Keterampilan Teknis</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Profil & Latar Belakang -->
+      <div class="slide" id="slide2">
+        <div class="card-3d">
+          <div class="card-content">
+            <span class="title-tag">Tentang Saya</span>
+            <h2>Halo, Saya Abriel</h2>
+            <p>Saya lahir di Cirebon, pada tanggal 5 oktober 2004, Saya lulusan dari sebuah Smkn 1 Cirebon dengan jurusan Elekronika Industri dan memiliki beberapa pengalaman.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Introduction -->
+      <div class="slide" id="slide3">
+        <div class="card-3d">
+          <div class="card-content">
+            <span class="title-tag">Introduction</span>
+            <h2>Pengenalan</h2>
+            <p>Saya seorang engineer yang memiliki pengalaman dalam pengelolaan sistem teknis dan operasional di lingkungan hotel. Saya terbiasa bekerja dengan sistem mekanikal, elektrikal, dan pemeliharaan fasilitas untuk memastikan operasional berjalan lancar.</p>
+            <p>Melalui portofolio ini, saya membagikan pengalaman, keterampilan, dan proyek yang mencerminkan dedikasi saya terhadap kualitas kerja dan pengembangan profesional.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: About Me -->
+      <div class="slide" id="slide4">
+        <div class="card-3d">
+          <div class="card-content">
+            <span class="title-tag">About Me</span>
+            <h2>Pengalaman & Minat</h2>
+            <p>Saya saat ini bekerja di sebuah hotel bintang dua di group GWS (Grahawita Santika) di sebuah hotel Amaris Tasikmalaya. Saya sendiri memiliki pengalaman pada sistem HVAC dan kelistrikan, akan tetapi saya lebih tertarik pada bidang IT yaitu di bidang wifi dan dll.</p>
+            <p>Saya dapat bekerja fleksibel. Saya memiliki sedikit pengalaman di FO (system PMS), housekeeping dan kitchen.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: My History -->
+      <div class="slide" id="slide5">
+        <div class="card-3d">
+          <div class="card-content">
+            <span class="title-tag">Riwayat Kerja</span>
+            <h2>My History</h2>
+            <div class="box-info" style="margin-bottom: 1rem;">
+              <h4>2022 - 2023 | CV Dinamika Karya</h4>
+              <p>(teknisi support, yang tugasnya membantu Teknisi lapangan dan juga melancarkan jalannya proyek) CV dinamika karya adalah sebuah perusahaan yang memasang/perbaikan CCTV, WIFI</p>
+            </div>
+            <div class="box-info" style="margin-bottom: 1rem;">
+              <h4>2023 - 2025 | Amaris Hotel Cirebon</h4>
+              <p>(engineer Staff, yang tugasnya memperbaiki, menghandle dan menjalankan sebuah system hotel agar dapat bekerja dengan baik dan tidak ada kendala pada sebuah system hotel tersebut)</p>
+            </div>
+            <div class="box-info">
+              <h4>2025 - 2026 | Amaris Hotel Tasikmalaya</h4>
+              <p>(Engineering Staff, perbedaan yang dapat saya berikan disini dan di Cirebon adalah system mereka sebagai contoh untuk tasik mereka menggunakan heat pump sementara untuk cirebon mereka menggunakan water heater)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: My Vision & Mission -->
+      <div class="slide" id="slide6">
+        <div class="card-3d">
+          <div class="card-content">
+            <span class="title-tag">Prinsip Kerja</span>
+            <h2>Visi & Misi</h2>
+            <div class="grid-2">
+              <div class="box-info">
+                <h3>My Vision</h3>
+                <p>Menjadi pribadi yang terus belajar, berinovasi, dan menghasilkan solusi kreatif yang relevan dengan juga membagi pengetahuan dan mensharing ilmu agar menjadi lebih baik dan profesional di bidang engineer.</p>
+              </div>
+              <div class="box-info">
+                <h3>My Mission</h3>
+                <p>Membentuk sebuah team yang efisien dan profesional dengan mementingkan kerjasama antar sesama rekan, agar sistem hotel menjadi lebih rapih, ideal dan bagus.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: My Project -->
+      <div class="slide" id="slide7">
+        <div class="card-3d">
+          <div class="card-content">
+            <span class="title-tag">Pengalaman Kerja</span>
+            <h2>My Project</h2>
+            <p>Selainn di bidang lapangan saya pun pernah merangkap sebagai spv yaitu dengan membuat sebuah monthly report, manager report, kinerja hm, dan juga beberapa dokumen lainnya.</p>
+            <div class="grid-2">
+              <div class="box-info">
+                <h4>Bidang Lapangan</h4>
+                <p>Pada bidang lapangan saya pernah memperbaiki, AC, Wifi, shower tab (kran tengah), plumbing, fire alarm control, dan beberapa sistem pc</p>
+              </div>
+              <div class="box-info">
+                <h4>Bidang lainnya</h4>
+                <p>Di beberapa waktu saya sempat membuat beberapa dokumen.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Support Project -->
+      <div class="slide" id="slide8">
+        <div class="card-3d">
+          <div class="card-content">
+            <span class="title-tag">Dokumentasi</span>
+            <h2>My Project Support</h2>
+            <p>Berikut beberapa gambar project yang dapat saya berikan sebagai bahan dukungan.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Contact & Closing -->
+      <div class="slide" id="slide9">
+        <div class="card-3d">
+          <div class="card-content">
+            <span class="title-tag">Hubungi Saya</span>
+            <h2>Contact Information</h2>
+            <div class="grid-2" style="margin-bottom: 1.5rem;">
+              <div class="box-info">
+                <h4><i class="fa-solid fa-phone"></i> Phone Number</h4>
+                <p>+62 895-3634-86417</p>
+              </div>
+              <div class="box-info">
+                <h4><i class="fa-solid fa-envelope"></i> Email</h4>
+                <p>gsnabril@gmail.com</p>
+              </div>
+              <div class="box-info">
+                <h4><i class="fa-brands fa-instagram"></i> Social Media</h4>
+                <p>abrilgsn (IG)</p>
+              </div>
+            </div>
+            <p style="text-align: center; color: var(--primary); font-weight: 600;">
+              Terimakasih saya ucapkan kepada Bpk/Ibu HR karena telah meluangkan waktunya untuk melihat portofolio, besar harapan saya agar dapat diterima di perusahaan Bpk/ibu.
+            </p>
+            <h3 style="text-align: center; color: #fff; margin-top: 1rem; font-family: 'Orbitron';">Thank You FOR YOUR ATTENTION</h3>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 9;
+    const sliderContainer = document.getElementById('sliderContainer');
+    const dotsContainer = document.getElementById('dotsContainer');
+    let isScrolling = false;
+
+    // Generasi Titik Navigasi
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    const dots = document.querySelectorAll('.dot');
+
+    function updateSlider() {
+      sliderContainer.style.transform = `translateX(-${currentSlide * 100}vw)`;
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlider();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlider();
+      }
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlider();
+    }
+
+    // Navigasi Menggunakan Mouse Wheel / Touchpad Horizontal & Vertikal
+    window.addEventListener('wheel', (e) => {
+      if (isScrolling) return;
+      isScrolling = true;
+      if (e.deltaY > 0 || e.deltaX > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+      setTimeout(() => { isScrolling = false; }, 800);
+    });
+
+    // Navigasi Tombol Panah Keyboard
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+    });
+
+    // Efek Tilt 3D pada Kartu saat Mouse Bergerak
+    document.querySelectorAll('.card-3d').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        card.style.transform = `rotateY(${x / 30}deg) rotateX(${-y / 30}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+      });
+    });
+  </script>
+</body>
+</html>
