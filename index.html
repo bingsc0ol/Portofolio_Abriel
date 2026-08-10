@@ -126,7 +126,7 @@
       top: 0; left: 0; right: 0; bottom: 0;
       background: linear-gradient(135deg, rgba(10, 15, 29, 0.92), rgba(30, 58, 138, 0.85));
       z-index: 1;
-      pointer-events: none; /* Mencegah background menghalangi klik */
+      pointer-events: none;
     }
 
     #slide1 { background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1920&q=80'); }
@@ -142,7 +142,7 @@
     /* Fix Kartu 3D & Scrollable */
     .card-3d {
       position: relative;
-      z-index: 10; /* Berada di atas lapisan background agar pasti bisa diklik */
+      z-index: 10;
       background: var(--card-bg);
       backdrop-filter: blur(12px);
       border: 1px solid var(--card-border);
@@ -151,8 +151,8 @@
       max-width: 800px;
       width: 100%;
       max-height: calc(100vh - 6rem);
-      overflow-y: auto; /* Aktifkan scroll vertikal */
-      touch-action: pan-y; /* Memastikan gesture scroll vertikal di HP berjalan lancar */
+      overflow-y: auto;
+      touch-action: pan-y;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
     }
 
@@ -183,16 +183,12 @@
 
     h1 { font-size: 2rem; }
     h2 { font-size: 1.5rem; border-bottom: 2px solid var(--primary); padding-bottom: 0.4rem; display: inline-block;}
-    
-    .project-card img {
-      width: 100%;
-      height: auto;
-      max-height: 250px;
-      object-fit: contain;
-      background: #000;
-      border-bottom: 1px solid rgba(245, 158, 11, 0.2);
-      display: block;  }
-    
+
+    p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
     }
 
     .grid-2 {
@@ -290,11 +286,15 @@
       text-align: center;
     }
 
+    /* PERBAIKAN CSS GAMBAR: Tampil Utuh dan Tidak Terpotong */
     .project-card img {
       width: 100%;
-      height: 120px;
-      object-fit: cover;
+      height: auto;
+      max-height: 250px;
+      object-fit: contain;
+      background: #000;
       border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+      display: block;
     }
 
     .project-card p {
@@ -352,19 +352,17 @@
   <div class="slider-wrapper">
     <div class="slider-container" id="sliderContainer">
 
-      <!-- Slide 1: Front Page (Layar Utama dengan Fitur Hubungi Saya & Kontak Cepat) -->
+      <!-- Slide 1: Front Page -->
       <div class="slide" id="slide1">
         <div class="card-3d">
           <span class="title-tag">ENGINEERING STAFF</span>
           <h1>Abriel Ghasani</h1>
           <p>Portofolio Pengalaman Kerja & Keterampilan Teknis</p>
           
-          <!-- Tombol Ke Slide Kontak -->
           <button class="btn-contact-main" onclick="goToSlide(8)">
             <i class="fa-solid fa-paper-plane"></i> Hubungi Saya
           </button>
 
-          <!-- Opsi Kontak Langsung di Slide 1 -->
           <div class="quick-contacts">
             <a href="https://wa.me/6281315086951" target="_blank" class="quick-btn">
               <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> WhatsApp
@@ -386,7 +384,6 @@
           <h2>Halo, Saya Abriel</h2>
           <p>Saya lahir di Cirebon, pada tanggal 5 oktober 2004, Saya lulusan dari Smkn 1 Cirebon dengan jurusan Elekronika Industri dan memiliki beberapa pengalaman terutama pada engineering building.</p>
           
-          <!-- Opsi Kontak Langsung di Slide 2 -->
           <div class="quick-contacts">
             <a href="https://wa.me/6281315076951" target="_blank" class="quick-btn">
               <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> WA: +62 13-1507-6951
@@ -484,22 +481,22 @@
           
           <div class="project-gallery">
             <div class="project-card">
-              <img src="IMG-20260709-WA0030.jpeg" alt="Project Pergantian Filter oli Genset>
+              <img src="IMG-20260709-WA0030.jpg" alt="Pergantian Filter Oli Genset">
               <p>Pergantian Filter Oli dan solar Genset</p>
             </div>
             <div class="project-card">
-              <img src="IMG-20260709-WA0030.jpeg" alt="Maintenance Gedung">
-              <p>Maintenance Gedung </p>
+              <img src="IMG-20260722-WA0045.jpg" alt="Maintenance Gedung">
+              <p>Maintenance Gedung</p>
             </div>
             <div class="project-card">
-              <img src="IMG-20260712-WA0059.jpg" alt="Kelistrikan">
+              <img src="IMG-20260729-WA0043.jpg" alt="Kelistrikan">
               <p>Perbaikan Saklar dan kelistrikan</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Slide 9: Contact & Closing (Halaman Kontak Utama) -->
+      <!-- Slide 9: Contact & Closing -->
       <div class="slide" id="slide9">
         <div class="card-3d">
           <span class="title-tag">Hubungi Saya</span>
@@ -544,7 +541,6 @@
     const sliderContainer = document.getElementById('sliderContainer');
     const dotsContainer = document.getElementById('dotsContainer');
 
-    // Generasi Indikator Titik
     for (let i = 0; i < totalSlides; i++) {
       const dot = document.createElement('div');
       dot.classList.add('dot');
@@ -581,7 +577,6 @@
       updateSlider();
     }
 
-    // Swipe Layar di HP (Hanya jika gerakan horizontal mendominasi)
     let touchStartX = 0;
     let touchStartY = 0;
     let touchEndX = 0;
@@ -602,14 +597,12 @@
       const diffX = touchEndX - touchStartX;
       const diffY = touchEndY - touchStartY;
 
-      // Hanya ganti slide jika gerakan menyamping lebih dominan daripada gerakan scroll vertikal
       if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
         if (diffX < 0) nextSlide();
         else prevSlide();
       }
     }
 
-    // Keyboard Arrow
     window.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') nextSlide();
       if (e.key === 'ArrowLeft') prevSlide();
